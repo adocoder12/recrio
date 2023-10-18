@@ -1,0 +1,76 @@
+@import-normalize;
+@tailwind base;
+@tailwind components;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+@layer base {
+  body {
+    @apply flex items-start min-w-[320px] min-h-screen;
+  }
+}
+
+@layer components {
+  /* Sidebar */
+  .sidebar-icon {
+    @apply relative flex items-center justify-center
+    h-2/6 w-full mt-2 mb-2 
+    bg-transparent hover:bg-green-600 dark:bg-transparent
+      text-green-500 hover:text-white
+        transition-all duration-300 ease-linear
+        cursor-pointer shadow-lg active:bg-green-600;
+  }
+
+  .sidebar-tooltip {
+    @apply absolute w-auto p-2 m-8  min-w-max left-14 rounded-md shadow-md
+        text-white bg-gray-600
+        text-xs font-bold
+        transition-all duration-100 scale-0 origin-left;
+  }
+  .sidebar-icon-icon {
+    @apply text-xl;
+  }
+  .sidebar-hr {
+    @apply bg-gray-200 dark:bg-gray-800
+    border border-gray-200 dark:border-gray-800 rounded-full
+    mx-2;
+  }
+  /* MAin container app */
+  .app {
+    @apply flex flex-row  w-full bg-slate-700;
+  }
+  .app-main {
+    @apply flex flex-col   items-center justify-center max-w-full  flex-auto  pl-12 min-h-screen p-4 md:p-8;
+    /* flex flex-columns items-start  justify-center w-full  flex-auto  pl-12 h-screen */
+  }
+  /* BTN */
+  .btn {
+    @apply cursor-pointer   capitalize flex items-center gap-1.5
+      px-4 py-1
+      md:px-6 md:py-2 
+      xl:px-16 xl:py-2 
+      bg-transparent bg-opacity-80 text-[#f1f1f1]  border-blue-500 border-2
+      rounded-3xl hover:bg-opacity-70  font-semibold hover:bg-blue-500
+      shadow-md transition-all duration-200 ease-linear;
+  }
+  .search {
+    @apply block  flex-auto w-full  px-8 py-2 
+    sm:text-sm max-w-[420px] 
+    md:px-6 md:py-3
+    text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400
+    focus:border-blue-500 focus:outline-none focus:ring-blue-500;
+  }
+}
+@tailwind utilities;
