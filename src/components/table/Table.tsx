@@ -1,19 +1,9 @@
-import { useEffect } from "react";
 //redux hooks
-import { useAppSelector, useAppDispatch } from "../../redux/hook/storeHook";
+import { useAppSelector } from "../../redux/hook/storeHook";
 //types
 import { TUser } from "../../utils/types";
-//redux
-import { getByName } from "../../redux/Slicers/paginationReducer";
-
 export default function Table() {
-  const dispatch = useAppDispatch();
   const { currentPosts } = useAppSelector((state) => state.pagination);
-  const { query } = useAppSelector((state) => state.search);
-
-  useEffect(() => {
-    dispatch(getByName(query));
-  }, [query, dispatch]);
 
   return (
     <>

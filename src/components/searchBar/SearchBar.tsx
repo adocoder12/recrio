@@ -1,14 +1,15 @@
 import { useAppDispatch } from "client/src/redux/hook/storeHook";
 import { ChangeEvent, useEffect, useState } from "react";
-import { search } from "../../redux/Slicers/searchSlicer";
+// import { search } from "../../redux/Slicers/searchSlicer";
+//redux
+import { getByName } from "../../redux/Slicers/paginationReducer";
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
   const dispatch = useAppDispatch();
-  console.log(query);
 
   useEffect(() => {
-    dispatch(search(query));
+    dispatch(getByName(query));
   }, [query, dispatch]);
 
   return (

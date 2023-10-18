@@ -54,7 +54,10 @@ export const paginationSlice = createSlice({
       const query = payload.toLowerCase();
       if (query !== "") {
         state.currentPosts = state.users.filter((item) => {
-          return item.name.toLowerCase().includes(query);
+          return (
+            item.lastname.toLowerCase().includes(query) ||
+            item.name.toLowerCase().includes(query)
+          );
         });
       } else {
         state.currentPosts = state.users.slice(

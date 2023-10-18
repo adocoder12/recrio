@@ -11,14 +11,14 @@ const usersTable: TUser[] = [
   {
     id: 8646756785,
     name: "Lian",
-    lastname: "Smith",
+    lastname: "Gonzalez",
     phone: "622322662",
     email: "",
   },
   {
     id: 56346346,
     name: "xeno",
-    lastname: "Smith",
+    lastname: "bermudes",
     phone: "622322662",
     email: "",
   },
@@ -90,7 +90,7 @@ const usersTable: TUser[] = [
   {
     id: 809809707,
     name: "redi",
-    lastname: "Smith",
+    lastname: "garcia",
     phone: "622322662",
     email: "",
   },
