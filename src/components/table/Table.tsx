@@ -10,7 +10,7 @@ export default function Table({ users, className }: Props) {
     <>
       <div className="min-w-full   py-4 px-4 md:py-8">
         <div
-          className={`shadow rounded border-b border-gray-200 h-full overflow-hidden overflow-y-auto ${className}  min-w-[420px]`}
+          className={`shadow rounded border-b border-gray-200  overflow-hidden overflow-y-auto ${className}  min-w-[420px]`}
         >
           <table className="min-w-full bg-white table-fixed ">
             <thead className="bg-gray-800 text-white sticky top-0 h-14">

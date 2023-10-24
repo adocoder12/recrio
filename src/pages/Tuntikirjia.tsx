@@ -82,8 +82,8 @@ export default function Tuntikirjia() {
           <CardHours user={user} />
         </div>
       </div>
-      <div className="lowersection basis-full">
-        <Table className=" h-[440px]" users={filteredUsers} />
+      <div className="lowersection h-[420px] basis-full">
+        <Table className=" h-[420px]" users={filteredUsers} />
       </div>
     </div>
   );
