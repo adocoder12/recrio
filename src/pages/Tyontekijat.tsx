@@ -1,38 +1,48 @@
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 //Icons
 import { FaPlus } from "react-icons/fa6";
-
 //Components
-import Table from "../components/table/Table";
-import Pagination from "../components/Pagination/Pagination";
-import SearchBar from "../components/searchBar/SearchBar";
+import Table from "@components/table/Table";
+import Pagination from "@components/Pagination/Pagination";
+import SearchBar from "@components/searchBar/SearchBar";
 
 //redux
-import { useAppDispatch } from "../redux/hook/storeHook";
-import { getUsers, getCurrentPage } from "../redux/Slicers/paginationReducer";
-
+import { useAppDispatch, useAppSelector } from "@redux/hook/storeHook";
+import { getUsers, getCurrentPage } from "@redux/Slicers/paginationReducer";
 //data
-import usersTable from "../data";
+import usersTable from "@/data";
 
 export default function Tyontekijat() {
+  const [currentPage, setCurrenPage] = useState<number>(1);
+  const { currentPosts } = useAppSelector((state) => state.pagination);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getUsers(usersTable));
+    return () => {
+      console.log("cleanup");
+    };
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getCurrentPage(currentPage));
+    return () => {
+      console.log("cleanup");
+    };
+  }, [dispatch, currentPage]);
+
   const paginate = (pageNumber: number) => {
-    dispatch(getCurrentPage(pageNumber));
+    setCurrenPage(pageNumber);
   };
+  console.log(currentPosts);
 
   return (
-    <div className="flex flex-col w-11/12 min-h-[85vh]  justify-center items-strech  ">
+    <div className="flex flex-col w-11/12 h-[85vh]  justify-center items-strech ">
       <div className=" flex-initial ">
         <BtnBar />
       </div>
       <div className="basis-full flex-1  md:px-8 ">
-        <Table />
+        <Table users={currentPosts!} />
       </div>
       <div className="m-auto">
         <Pagination paginate={paginate} />
@@ -44,11 +54,6 @@ export default function Tyontekijat() {
 // BTN bar
 
 const BtnBar = () => {
-  // const [query, setQuery] = useState("");
-
-  // const searchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setQuery(e.target.value);
-  // };
   const buttons = [
     { name: "lisää", icon: <FaPlus size={20} /> },
     { name: "vie", icon: <FaPlus size={20} /> },

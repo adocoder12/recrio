@@ -9,8 +9,10 @@ import { FaClock } from "react-icons/fa6";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
+//types
+import { sidebarIconTypes } from "@utils/types";
 
-const UpperItems = [
+const UpperItems: sidebarIconTypes[] = [
   { name: "koti", icon: <FaHouseChimney /> },
   { name: "työntekijat", icon: <FaPerson /> },
   { name: "palkat", icon: <FaCircleDollarToSlot /> },
@@ -53,7 +55,9 @@ const SidebarIcon = ({ icon, text }: sidebarIconProps) => {
       to={`/${text}`}
     >
       <span className="sidebar-icon-icon">{icon}</span>
-      <span className="sidebar-tooltip   group-hover:scale-100">{text}</span>
+      <span className="sidebar-tooltip capitalize  group-hover:scale-100">
+        {text}
+      </span>
     </NavLink>
   );
 };

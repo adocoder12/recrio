@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 //types
-import { TUser } from "../../utils/types";
+import { TuserPreview, TUser } from "../../utils/types";
 
 type initialStateType = {
   users: TUser[];
@@ -10,8 +10,10 @@ type initialStateType = {
   pageNumbers: number[];
   indexOfLastPost: number | undefined;
   indexOfFirstPost: number | undefined;
-  currentPosts: TUser[] | undefined;
+  currentPosts: TuserPreview[] | undefined;
   currentPage: number;
+  error: string | null;
+  loading: boolean;
 };
 
 const initialState: initialStateType = {
@@ -23,10 +25,9 @@ const initialState: initialStateType = {
   indexOfFirstPost: undefined,
   currentPosts: undefined,
   currentPage: 1,
+  error: null,
+  loading: false,
 };
-
-console.log("currentPosts " + initialState.currentPosts);
-
 export const paginationSlice = createSlice({
   name: "pagination",
   initialState,
@@ -34,12 +35,6 @@ export const paginationSlice = createSlice({
     getUsers: (state, { payload }) => {
       state.users = payload;
       state.totalPosts = payload.length;
-      state.indexOfLastPost = state.currentPage * state.postsPerPage;
-      state.indexOfFirstPost = state.indexOfLastPost - state.postsPerPage;
-      state.currentPosts = state.users.slice(
-        state.indexOfFirstPost,
-        state.indexOfLastPost
-      );
     },
     getCurrentPage: (state, { payload }) => {
       state.currentPage = payload;
@@ -49,13 +44,21 @@ export const paginationSlice = createSlice({
         state.indexOfFirstPost,
         state.indexOfLastPost
       );
+      state.currentPosts = state.currentPosts.map((item) => {
+        return {
+          name: item.name,
+          lastname: item.lastname,
+          email: item.email,
+          phone: item.phone,
+        };
+      });
     },
     getByName: (state, { payload }) => {
       const query = payload.toLowerCase();
       if (query !== "") {
         state.currentPosts = state.users.filter((item) => {
           return (
-            item.lastname.toLowerCase().includes(query) ||
+            item.lastname?.toLowerCase().includes(query) ||
             item.name.toLowerCase().includes(query)
           );
         });
@@ -65,6 +68,14 @@ export const paginationSlice = createSlice({
           state.indexOfLastPost
         );
       }
+      state.currentPosts = state.currentPosts.map((item) => {
+        return {
+          name: item.name,
+          lastname: item.lastname,
+          email: item.email,
+          phone: item.phone,
+        };
+      });
     },
     generatePageNumbers: (state) => {
       const totalPages = Math.ceil(state.totalPosts / state.postsPerPage);
@@ -77,7 +88,6 @@ export const paginationSlice = createSlice({
           state.pageNumbers.push(i);
         }
       }
-      console.log("pageNumber reducer " + state.pageNumbers);
     },
   },
 });

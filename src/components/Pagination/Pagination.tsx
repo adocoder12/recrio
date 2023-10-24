@@ -1,7 +1,9 @@
+//react
 import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../redux/hook/storeHook";
 
-import { generatePageNumbers } from "../../redux/Slicers/paginationReducer";
+//redux
+import { useAppSelector, useAppDispatch } from "@redux/hook/storeHook";
+import { generatePageNumbers } from "@redux/Slicers/paginationReducer";
 
 type Props = {
   paginate: (number: number) => void;
@@ -9,11 +11,6 @@ type Props = {
 
 export default function Pagination({ paginate }: Props) {
   const dispatch = useAppDispatch();
-  /* const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-*/
   const { pageNumbers, currentPage } = useAppSelector(
     (state) => state.pagination
   );

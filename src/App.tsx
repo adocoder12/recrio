@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //components
-import Sidebar from "./components/sidebar/Sidebar";
-import SearchBar from "./components/searchBar/SearchBar";
+import Sidebar from "@components/sidebar/Sidebar";
+// import SearchBar from "@components/searchBar/SearchBar";
 //pages
-import HomePage from "./pages/HomePage";
-import Tyontekijat from "./pages/Tyontekijat";
+import HomePage from "@/pages/HomePage";
+import Tyontekijat from "@/pages/Tyontekijat";
+import Tuntikirjia from "@/pages/Tuntikirjia";
 
 function App() {
   return (
@@ -19,9 +20,8 @@ function App() {
             <Routes>
               <Route index path="/" element={<HomePage />} />
               <Route path="/koti" element={<HomePage />} />
-              <Route path="/työntekijat" element={<Tyontekijat />}>
-                <Route path="search" element={<SearchBar />} />
-              </Route>
+              <Route path="/työntekijat" element={<Tyontekijat />} />
+              <Route path="/tuntikirja" element={<Tuntikirjia />} />
             </Routes>
           </main>
         </BrowserRouter>
