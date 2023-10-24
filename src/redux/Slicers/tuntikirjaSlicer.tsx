@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import usersTable from "@/data";
 //type
-
-import { Tdate } from "@/utils/types";
+import { Tdate, TusersTuntikirjaCard } from "@/utils/types";
 type TUser = {
   id?: number;
   name: string;
@@ -14,7 +13,7 @@ type TUser = {
 };
 
 interface TinitialState {
-  users: TUser[];
+  users: TusersTuntikirjaCard[];
   highHoursUsers?: TUser[];
   mostHoursUser?: TUser | undefined;
   mostHoursLastWeek: TUser | undefined;
@@ -30,8 +29,7 @@ const initialState: TinitialState = {
   mostHoursLastMonth: undefined,
   mostHoursCurrentWeek: undefined,
 };
-
-console.log(initialState.mostHoursLastWeek);
+//date
 const currentDate = new Date();
 const lastWeekStart = new Date(
   currentDate.getFullYear(),
@@ -39,20 +37,25 @@ const lastWeekStart = new Date(
   currentDate.getDate() - 7
 );
 const lastWeekEnd = currentDate;
+//user
+const filteredUsers = usersTable.map((item) => {
+  return {
+    loggedIn: item.loggedIn,
+    name: `${item.name} ${item.lastname}, #${item.id} `,
+    osasto: item.osasto,
+    totalhours: item.totalhours,
+    workingHours: item.workingHours,
+  };
+});
+
+//Slice
 
 const tuntikirjaSlicer = createSlice({
   name: "mySliceName",
   initialState,
   reducers: {
-    getUsersHours: (state, { payload }) => {
-      state.users = payload;
-      //   state.mostHoursUser = state.users.reduce((prev: TUser, current: TUser) =>
-      //     prev.totalhours > current.totalhours ? prev : current
-      //   );
-      //   state.highHoursUsers = state.users.filter((user: TUser) => {
-      //     return user.totalhours > 30;
-      //   });
-
+    getUsersHours: (state) => {
+      state.users.push(...filteredUsers);
       let currentWeek: TUser | undefined = undefined;
 
       state.users.find((user) => {

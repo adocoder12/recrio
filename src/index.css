@@ -39,6 +39,10 @@
         text-xs font-bold
         transition-all duration-100 scale-0 origin-left;
   }
+  .sidebar-active {
+    @apply bg-green-600 text-white;
+  }
+
   .sidebar-icon-icon {
     @apply text-xl;
   }

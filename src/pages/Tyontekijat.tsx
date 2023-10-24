@@ -17,6 +17,8 @@ export default function Tyontekijat() {
   const { currentPosts } = useAppSelector((state) => state.pagination);
   const dispatch = useAppDispatch();
 
+  console.log(usersTable.length);
+
   useEffect(() => {
     dispatch(getUsers(usersTable));
     return () => {

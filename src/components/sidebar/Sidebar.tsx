@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 //Icons
 import { FaHouseChimney } from "react-icons/fa6";
 import { FaPerson } from "react-icons/fa6";
@@ -14,10 +15,10 @@ import { sidebarIconTypes } from "@utils/types";
 
 const UpperItems: sidebarIconTypes[] = [
   { name: "koti", icon: <FaHouseChimney /> },
-  { name: "työntekijat", icon: <FaPerson /> },
+  { name: "tyontekijat", icon: <FaPerson /> },
   { name: "palkat", icon: <FaCircleDollarToSlot /> },
   { name: "tiedostot", icon: <FaFolderOpen /> },
-  { name: "työvuorot", icon: <FaCalendarDays /> },
+  { name: "tyovuorot", icon: <FaCalendarDays /> },
   { name: "tuntikirja", icon: <FaClock /> },
 ];
 
@@ -27,18 +28,41 @@ const middleItems = [
 ];
 const bottomItems = [{ name: "Asetukset", icon: <FaGear /> }];
 export default function Sidebar() {
+  const location = useLocation();
+  const [url, setUrl] = useState<string>("");
+
+  useEffect(() => {
+    setUrl(location.pathname);
+  }, [location]);
+  console.log(location.pathname);
+
   return (
     <div className="h-screen w-full flex flex-col  justify-around grow bg-white dark:bg-gray-900 shadow-lg ">
       {UpperItems.map((item, index) => (
-        <SidebarIcon icon={item.icon} text={item.name} key={index} />
+        <SidebarIcon
+          className={"/" + item.name === url ? "sidebar-active " : ""}
+          icon={item.icon}
+          text={item.name}
+          key={index}
+        />
       ))}
       <Divider />
       {middleItems.map((item, index) => (
-        <SidebarIcon icon={item.icon} text={item.name} key={index} />
+        <SidebarIcon
+          className={"/" + item.name === url ? "sidebar-active " : ""}
+          icon={item.icon}
+          text={item.name}
+          key={index}
+        />
       ))}
       <Divider />
       {bottomItems.map((item, index) => (
-        <SidebarIcon icon={item.icon} text={item.name} key={index} />
+        <SidebarIcon
+          className={"/" + item.name === url ? "sidebar-active " : ""}
+          icon={item.icon}
+          text={item.name}
+          key={index}
+        />
       ))}
     </div>
   );
@@ -47,11 +71,12 @@ export default function Sidebar() {
 type sidebarIconProps = {
   icon: JSX.Element;
   text: string;
+  className?: string;
 };
-const SidebarIcon = ({ icon, text }: sidebarIconProps) => {
+const SidebarIcon = ({ icon, text, className }: sidebarIconProps) => {
   return (
     <NavLink
-      className="sidebar-icon group  group-active:bg-green-600"
+      className={`sidebar-icon group ${className} group-active:bg-green-600`}
       to={`/${text}`}
     >
       <span className="sidebar-icon-icon">{icon}</span>

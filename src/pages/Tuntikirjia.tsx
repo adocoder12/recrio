@@ -15,12 +15,11 @@ import {
 import { useEffect, useState } from "react";
 
 export default function Tuntikirjia() {
-  const { mostHoursUser, mostHoursCurrentWeek } = useAppSelector(
-    (state) => state.tuntikirja
-  );
-
   const dispatch = useAppDispatch();
   const [user, setUser] = useState<TusersTuntikirjaCard | undefined>(undefined);
+
+  const { mostHoursUser, mostHoursCurrentWeek, mostHoursLastWeek } =
+    useAppSelector((state) => state.tuntikirja);
 
   const filteredUsers = usersTable.map((item) => {
     return {
@@ -28,21 +27,22 @@ export default function Tuntikirjia() {
       name: `${item.name} ${item.lastname}, #${item.id} `,
       osasto: item.osasto,
       totalhours: item.totalhours,
-      workingHours: item.workingHours,
     };
   });
 
+  //default
   useEffect(() => {
-    setUser(mostHoursCurrentWeek);
+    setUser(mostHoursUser);
     return () => {
       console.log("cleanup");
+      setUser(undefined);
     };
-  }, []);
+  }, [mostHoursUser]);
 
+  //current week
   const getCurrentWeek = () => {
-    dispatch(getUsersHours(filteredUsers));
-    setUser(mostHoursUser);
-    console.log("clicked");
+    dispatch(getUsersHours());
+    setUser(mostHoursCurrentWeek);
   };
 
   useEffect(() => {
@@ -52,19 +52,20 @@ export default function Tuntikirjia() {
     };
   }, [dispatch]);
 
+  //last week
   const getLastWeek = () => {
     dispatch(findMostHoursLastWeek());
-    setUser(mostHoursUser);
-    console.log("clicked");
-
-    console.log("clicked");
   };
+
   useEffect(() => {
-    getLastWeek();
+    setUser(mostHoursLastWeek);
     return () => {
       console.log("cleanup");
+      setUser(undefined);
     };
-  }, [dispatch]);
+  }, [dispatch, mostHoursLastWeek]);
+
+  //lastmonth
 
   return (
     <div className="flex flex-col w-11/12 h-[90vh] justify-center ">
@@ -82,7 +83,7 @@ export default function Tuntikirjia() {
         </div>
       </div>
       <div className="lowersection basis-full">
-        <Table className=" h-[450px]" users={filteredUsers} />
+        <Table className=" h-[440px]" users={filteredUsers} />
       </div>
     </div>
   );
